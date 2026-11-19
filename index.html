@@ -3590,7 +3590,9 @@ async function verificarPagamento(silencioso) {
     const r = await consultarStatusPagamento(p.transacaoId);
     const st = String(r.status || '').toLowerCase();
     if (st === 'pago' || st === 'confirmado') {
-      if (Array.isArray(r.numerosConfirmados) && r.numerosConfirmados.length) confirmarParticipacao(r);
+      // Sem banco de dados: os números confirmados são os que o próprio comprador escolheu.
+      if (!Array.isArray(r.numerosConfirmados) || !r.numerosConfirmados.length) r.numerosConfirmados = (p.dados && p.dados.numeros) || [];
+      if (r.numerosConfirmados.length) confirmarParticipacao(r);
       else if (!silencioso) toast('Pagamento aprovado; finalizando a confirmação dos números.');
     } else if (['expirado', 'cancelado', 'falhou', 'estornado'].includes(st)) {
       pararPolling(); state.pagamento = null; setPayStatus(st);
