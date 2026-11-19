@@ -104,7 +104,12 @@ export default async function handler(req, res) {
   } catch (error) {
     if (orderId) await releaseOrder(orderId, 'failed').catch(() => {});
     if (error.code === 'NUMBERS_BUSY') return res.status(409).json({ mensagem: error.message, numerosIndisponiveis: error.unavailable || [] });
-    console.error('NEXORA create PIX:', error);
+    console.error('NEXORA create PIX:', {
+      message: error?.message,
+      httpStatus: error?.httpStatus,
+      providerStatus: error?.providerStatus,
+      providerBody: error?.providerBody
+    });
     return jsonError(res, error, error.httpStatus && error.httpStatus < 500 ? error.httpStatus : 502);
   }
 }
