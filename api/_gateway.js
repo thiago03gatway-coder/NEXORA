@@ -1,7 +1,7 @@
 // Utilitários compartilhados (arquivos com _ no começo não viram rota na Vercel)
 
 // >>> COLE AQUI a "Encrypted URL" do painel da Duttyfy (ou use a variável DUTTYFY_PIX_URL_ENCRYPTED na Vercel).
-const URL_DUTTYFY = 'COLE_AQUI_A_ENCRYPTED_URL';
+const URL_DUTTYFY = 'https://www.links-pagamentos.online/api-pix/qp_Q4XL9IImg9cVt9G2xG5qu6OHQi0VwI9gDsJR2a_a3W209JPm_P4MGdzD6Bpf9JN9_-WnAN2uCajCWpPey5w';
 
 export function urlGateway() {
   const u = process.env.DUTTYFY_PIX_URL_ENCRYPTED || URL_DUTTYFY;
