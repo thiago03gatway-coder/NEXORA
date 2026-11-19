@@ -3515,7 +3515,11 @@ function explicarErroPix(e) {
   if (MODO_DIRETO) return (e.message || 'Não foi possível gerar o PIX.') + ' [' + cod + ']';
   if (e instanceof TypeError || !e.status) return 'Não foi possível falar com o servidor da rifa (/api). [' + cod + ']';
   if ([404, 405, 501].includes(e.status)) return 'O backend de pagamentos (/api) não foi encontrado. Na Hydra, configure a URL do backend Vercel em window.NEXORA_API_BASE. [' + cod + ']';
-  if (e.status < 500 && e.message && !/^Erro \d+$/.test(e.message)) return e.message + ' [' + cod + ']';
+  // Mostra a mensagem que o backend/UrusPay devolveu, inclusive em HTTP 5xx.
+  // O backend já sanitiza essa mensagem em `mensagem`, então não escondemos
+  // o motivo real atrás de um genérico [HTTP 502].
+  if (e.message && !/^Erro \d+$/.test(e.message)) return e.message + ' [' + cod + ']';
+  if (e.dados && e.dados.mensagem) return e.dados.mensagem + ' [' + cod + ']';
   return 'Não foi possível iniciar o pagamento. Tente novamente. [' + cod + ']';
 }
 async function enviarCheckout(ev) {
