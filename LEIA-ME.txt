@@ -1,0 +1,8 @@
+NEXORA - DUTTYFY (sem banco de dados)
+
+1) Abra api/_gateway.js e troque COLE_AQUI_A_ENCRYPTED_URL pela Encrypted URL do painel da Duttyfy.
+   (ou, em vez disso, crie a variavel DUTTYFY_PIX_URL_ENCRYPTED na Vercel)
+2) Suba tudo no GitHub (git add . / git commit / git push). A Vercel publica sozinha.
+3) Se o HTML ficar na HYDRA: abra index.html, procure URL_BACKEND_VERCEL e troque por
+   https://SEU-PROJETO.vercel.app/api
+   Se o site ficar na propria Vercel, nao precisa mexer.
